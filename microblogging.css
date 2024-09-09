@@ -37,5 +37,13 @@ border: 1px solid #ddd;
 padding: 1rem;
 margin-bottom: 1rem;
 }
+#user-dashboard {
+  display: none;
+}
+#login-form {
+  display: block;
+}
+
 li p {
 margin: 0;
+  
