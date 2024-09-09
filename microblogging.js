@@ -60,3 +60,15 @@ window.onload = function() {
     localStorage.setItem('posts', JSON.stringify([]));
   }
 };
+loginButton.addEventListener('click', () => {
+  console.log("Login button clicked"); // Add this line to debug
+  const username = usernameInput.value.trim();
+  if (username !== '') {
+    currentUser = username;
+    loginForm.style.display = 'none';
+    userDashboard.style.display = 'block';
+    userUsername.textContent = username;
+    loadPosts();
+  }
+});
+
