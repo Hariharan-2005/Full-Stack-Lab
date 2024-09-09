@@ -44,8 +44,6 @@ const posts = JSON.parse(localStorage.getItem('posts')) || [];
 posts.forEach(post => {
 const postItem = document.createElement('li');
 postItem.innerHTML = `
-Downloaded by Kumar Kumar (kumarkumar9489451205@gmail.com)
-lOMoARcPSD|22847842
 <p><strong>${post.username}</strong>: ${post.content}</p>
 `;
 postList.appendChild(postItem);
