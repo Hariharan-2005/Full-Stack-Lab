@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="microblogging.css">
+<link rel="stylesheet" href="styles.css">
 <title>Microblogging App</title>
 </head>
 <body>
@@ -13,7 +13,7 @@
 <main>
   <div id="login-form">
     <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username">
+    <input type="text" id="username" placeholder="Username" aria-label="Username">
     <button id="login-btn">Login</button>
   </div>
   <div id="user-dashboard" style="display: none;">
@@ -26,6 +26,6 @@
     <ul id="post-list"></ul>
   </div>
 </main>
-<script src="microblogging.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
