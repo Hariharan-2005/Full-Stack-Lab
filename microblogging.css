@@ -69,4 +69,26 @@ body {
     outline: 2px solid #007BFF;
     outline-offset: 2px;
   }
+  /* Existing CSS styles */
+
+button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* New styles for the logout button */
+#logout-btn {
+    background-color: #dc3545;
+}
+
+#logout-btn:hover {
+    background-color: #c82333;
+}
+
   
