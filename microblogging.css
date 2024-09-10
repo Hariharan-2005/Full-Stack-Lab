@@ -45,6 +45,10 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background-color: #555;
+}
+
 ul {
   list-style-type: none;
   padding-left: 0;
@@ -59,4 +63,9 @@ li {
 
 li p {
   margin: 0;
+}
+
+input:focus, textarea:focus, button:focus {
+  outline: 2px solid #007BFF;
+  outline-offset: 2px;
 }
