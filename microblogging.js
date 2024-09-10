@@ -7,7 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const postContent = document.getElementById('post-content'); 
     const postButton = document.getElementById('post-btn');
     const postList = document.getElementById('post-list');
+    const logoutButton = document.createElement('button'); // Create a logout button
     let currentUser = null;
+  
+    logoutButton.id = 'logout-btn'; // Assign ID to the button
+    logoutButton.textContent = 'Logout'; // Set button text
+    userDashboard.appendChild(logoutButton); // Append the button to the dashboard
   
     // Event listener for login button 
     loginButton.addEventListener('click', () => {
@@ -43,6 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   
+    // Event listener for logout button
+    logoutButton.addEventListener('click', () => {
+      localStorage.removeItem('currentUser'); // Remove the user from localStorage
+      currentUser = null; // Clear the current user
+      clearFeed(); // Clear the feed after logout
+      loginForm.style.display = 'block'; 
+      userDashboard.style.display = 'none'; 
+    });
+  
     // Save post to local storage
     function savePost(post) {
       try {
@@ -57,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load posts from local storage
     function loadPosts() {
       try {
-        postList.innerHTML = '';
+        postList.innerHTML = ''; // Clear the post list before loading
         const posts = JSON.parse(localStorage.getItem('posts')) || [];
         posts.forEach(post => {
           const postItem = document.createElement('li');
@@ -67,6 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (error) {
         console.error('Failed to load posts:', error);
       }
+    }
+  
+    // Clear the feed (posts) when logged out
+    function clearFeed() {
+      postList.innerHTML = ''; // Clear the post list from the UI
     }
   
     // Initial setup
@@ -82,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
       userDashboard.style.display = 'block'; 
       userUsername.textContent = currentUser;
       loadPosts();
+    } else {
+      clearFeed(); // Ensure the feed is cleared if not logged in
     }
   });
   
