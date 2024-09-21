@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password'); // Password input
     const loginButton = document.getElementById('login-btn');
     const userDashboard = document.getElementById('user-dashboard');
     const userUsername = document.getElementById('user-username');
@@ -10,16 +11,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const postList = document.getElementById('post-list');
     let currentUser = null;
 
+    const correctPassword = 'yourPassword'; // Set your password here
+
     // Event listener for login button
     loginButton.addEventListener('click', () => {
         const username = usernameInput.value.trim();
-        if (username !== '') {
+        const password = passwordInput.value; // Get the password
+
+        if (username !== '' && password === correctPassword) {
             currentUser = username;
             localStorage.setItem('currentUser', username);
             loginForm.style.display = 'none';
             userDashboard.style.display = 'block';
             userUsername.textContent = username;
             loadPosts();
+        } else {
+            alert('Invalid username or password.');
         }
     });
 
@@ -58,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Clear the feed
         postList.innerHTML = ''; // This should remove all post items from the feed
-        // Optionally clear posts from localStorage if needed
         localStorage.removeItem('posts');
     });
 
