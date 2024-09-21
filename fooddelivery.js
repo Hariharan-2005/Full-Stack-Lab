@@ -8,12 +8,12 @@ const orderConfirmation = document.getElementById('order-confirmation');
 const orderSummary = document.getElementById('order-summary');
 
 const restaurantsData = [
-    { name: 'KFC', logo: '"F:\full stack\kfc-logo.webp"', menu: ['Original Recipe Chicken', 'Hot Wings', 'Popcorn Chicken'] },
-    { name: 'Burger King', logo: 'https://example.com/burger-king-logo.png', menu: ['Whopper', 'Chicken Fries', 'Onion Rings'] },
-    { name: 'Popeyes', logo: 'https://example.com/popeyes-logo.png', menu: ['Chicken Sandwich', 'Cajun Fries', 'Biscuits'] },
-    { name: "Domino's", logo: 'https://example.com/dominos-logo.png', menu: ['Pepperoni Pizza', 'Cheese Pizza', 'Chicken Wings'] },
-    { name: "McDonald's", logo: 'https://example.com/mcdonalds-logo.png', menu: ['Big Mac', 'French Fries', 'McChicken'] },
-    { name: "Pizza Hut", logo: 'https://example.com/pizza-hut-logo.png', menu: ['Pan Pizza', 'Stuffed Crust', 'Breadsticks'] },
+    { name: 'KFC', logo: 'https://upload.wikimedia.org/wikipedia/en/6/6a/KFC_logo.svg', menu: ['Original Recipe Chicken', 'Hot Wings', 'Popcorn Chicken'] },
+    { name: 'Burger King', logo: 'https://upload.wikimedia.org/wikipedia/en/3/3f/Burger_King_2020_logo.svg', menu: ['Whopper', 'Chicken Fries', 'Onion Rings'] },
+    { name: 'Popeyes', logo: 'https://upload.wikimedia.org/wikipedia/en/b/bf/Popeyes_Louisiana_Kitchen_Logo.svg', menu: ['Chicken Sandwich', 'Cajun Fries', 'Biscuits'] },
+    { name: "Domino's", logo: 'https://upload.wikimedia.org/wikipedia/en/4/44/Dominos_logo.svg', menu: ['Pepperoni Pizza', 'Cheese Pizza', 'Chicken Wings'] },
+    { name: "McDonald's", logo: 'https://upload.wikimedia.org/wikipedia/commons/0/0e/McDonald's_logo.svg', menu: ['Big Mac', 'French Fries', 'McChicken'] },
+    { name: "Pizza Hut", logo: 'https://upload.wikimedia.org/wikipedia/en/4/4c/Pizza_Hut_logo.svg', menu: ['Pan Pizza', 'Stuffed Crust', 'Breadsticks'] },
 ];
 
 // Display list of restaurants
