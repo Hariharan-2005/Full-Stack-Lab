@@ -8,7 +8,7 @@ const orderConfirmation = document.getElementById('order-confirmation');
 const orderSummary = document.getElementById('order-summary');
 
 const restaurantsData = [
-    { name: 'KFC', logo: 'https://example.com/kfc-logo.png', menu: ['Original Recipe Chicken', 'Hot Wings', 'Popcorn Chicken'] },
+    { name: 'KFC', logo: '"F:\full stack\kfc-logo.webp"', menu: ['Original Recipe Chicken', 'Hot Wings', 'Popcorn Chicken'] },
     { name: 'Burger King', logo: 'https://example.com/burger-king-logo.png', menu: ['Whopper', 'Chicken Fries', 'Onion Rings'] },
     { name: 'Popeyes', logo: 'https://example.com/popeyes-logo.png', menu: ['Chicken Sandwich', 'Cajun Fries', 'Biscuits'] },
     { name: "Domino's", logo: 'https://example.com/dominos-logo.png', menu: ['Pepperoni Pizza', 'Cheese Pizza', 'Chicken Wings'] },
