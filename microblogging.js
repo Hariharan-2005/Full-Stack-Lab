@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const postList = document.getElementById('post-list');
     let currentUser = null;
 
-    const correctPassword = 'yourPassword'; // Set your password here
+    const correctPassword = 'password'; // Set your password here
 
     // Event listener for login button
     loginButton.addEventListener('click', () => {
