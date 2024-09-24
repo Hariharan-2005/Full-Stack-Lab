@@ -13,24 +13,11 @@ header {
     text-align: center;
 }
 
-nav ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
 main {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .restaurant {
@@ -81,12 +68,24 @@ button:hover {
     background: #ff4500;
 }
 
-#order-summary {
-    margin-top: 20px;
-    background: #fff;
-    padding: 15px;
+/* Order Summary Styling */
+.order-box, .form-box {
+    background-color: #fff;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#order-summary {
+    margin-top: 20px;
+}
+
+/* Initially hide the checkout form */
+.form-box {
+    display: none;
 }
 
 footer {
