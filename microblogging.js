@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password'); // Password input
+    const passwordInput = document.getElementById('password');
     const loginButton = document.getElementById('login-btn');
     const userDashboard = document.getElementById('user-dashboard');
     const userUsername = document.getElementById('user-username');
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listener for login button
     loginButton.addEventListener('click', () => {
         const username = usernameInput.value.trim();
-        const password = passwordInput.value; // Get the password
+        const password = passwordInput.value;
 
         if (username !== '' && password === correctPassword) {
             currentUser = username;
@@ -45,7 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 content: content,
                 date: date,
                 time: time,
-                likes: 0
+                likes: 0,
+                dislikes: 0,
+                comments: []
             };
             savePost(post);
             postContent.value = '';
@@ -64,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentUser = null;
 
         // Clear the feed
-        postList.innerHTML = ''; // This should remove all post items from the feed
+        postList.innerHTML = '';
         localStorage.removeItem('posts');
     });
 
@@ -124,18 +126,59 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         postItem.appendChild(likeButton);
 
+        // Add Dislike Button
+        const dislikeButton = document.createElement('button');
+        dislikeButton.textContent = `Dislike (${post.dislikes || 0})`;
+        dislikeButton.className = 'dislike-button';
+        dislikeButton.onclick = () => {
+            post.dislikes = (post.dislikes || 0) + 1;
+            savePost(post);
+            loadPosts();
+        };
+        postItem.appendChild(dislikeButton);
+
+        // Comment section
+        const commentSection = document.createElement('div');
+        commentSection.className = 'comment-section';
+
+        // Display existing comments
+        if (post.comments) {
+            post.comments.forEach(comment => {
+                const commentItem = document.createElement('div');
+                commentItem.className = 'comment';
+                commentItem.textContent = comment;
+                commentSection.appendChild(commentItem);
+            });
+        }
+
+        const commentInput = document.createElement('input');
+        commentInput.type = 'text';
+        commentInput.placeholder = 'Add a comment...';
+        commentSection.appendChild(commentInput);
+
+        const commentButton = document.createElement('button');
+        commentButton.textContent = 'Comment';
+        commentButton.onclick = () => {
+            const comment = commentInput.value.trim();
+            if (comment) {
+                post.comments = post.comments || [];
+                post.comments.push(comment);
+                savePost(post);
+                loadPosts();
+            } else {
+                alert('Comment cannot be empty.');
+            }
+        };
+        commentSection.appendChild(commentButton);
+
+        postItem.appendChild(commentSection);
         postList.appendChild(postItem);
     }
 
-    // Initial setup
-    if (localStorage.getItem('posts') === null) {
-        localStorage.setItem('posts', JSON.stringify([]));
-    }
-
-    // Check if user is logged in on page load
-    const savedUsername = localStorage.getItem('currentUser');
-    if (savedUsername) {
-        currentUser = savedUsername;
+    // Load posts on page load
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+        currentUser = storedUser;
         loginForm.style.display = 'none';
         userDashboard.style.display = 'block';
         userUsername.textContent = currentUser;
