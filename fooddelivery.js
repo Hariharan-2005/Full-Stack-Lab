@@ -1,12 +1,14 @@
 let order = [];
 let total = 0;
 
+// Function to add items to order
 function addToOrder(item, price) {
     order.push({ item, price });
     total += price;
     updateOrderSummary();
 }
 
+// Function to update order summary
 function updateOrderSummary() {
     const orderList = document.getElementById('order-list');
     orderList.innerHTML = '';
@@ -18,28 +20,32 @@ function updateOrderSummary() {
     document.getElementById('total-price').textContent = `Total: $${total}`;
 }
 
+// Event listener for the checkout button
 document.getElementById('checkout-btn').addEventListener('click', () => {
     if (order.length > 0) {
-        document.getElementById('order-summary').style.display = 'none';
-        document.getElementById('order-details').style.display = 'block';
+        document.querySelector('.order-box').style.display = 'none';
+        document.querySelector('.form-box').style.display = 'block';
     } else {
         alert('Please add items to your order first.');
     }
 });
 
+// Form submission event listener
 document.getElementById('order-form').addEventListener('submit', (event) => {
     event.preventDefault(); // Prevent default form submission
+
     const name = document.getElementById('name').value;
-    const location = document.getElementById('location').value;
+    const address = document.getElementById('address').value;
     const payment = document.getElementById('payment').value;
 
-    alert(`Thank you for your order, ${name}!\nLocation: ${location}\nPayment Type: ${payment}\nTotal: $${total}`);
+    // Show order confirmation alert
+    alert(`Thank you for your order, ${name}!\nAddress: ${address}\nPayment Type: ${payment}\nTotal: $${total}`);
 
-    // Reset order
+    // Reset order and form
     order = [];
     total = 0;
     updateOrderSummary();
-    document.getElementById('order-summary').style.display = 'block';
-    document.getElementById('order-details').style.display = 'none';
-    document.getElementById('order-form').reset(); // Reset the form
+    document.querySelector('.order-box').style.display = 'block';
+    document.querySelector('.form-box').style.display = 'none';
+    document.getElementById('order-form').reset();
 });
