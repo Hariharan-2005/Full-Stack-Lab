@@ -1,7 +1,6 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #87CEEB; /* Light sky blue background */
     margin: 0;
     padding: 0;
     display: flex;
@@ -11,26 +10,32 @@ body {
 }
 
 #wrapper {
-    background-color: #fff;
+    background-color: #ffffff; /* White background for the wrapper */
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     max-width: 400px;
     width: 100%;
+    text-align: center; /* Center text inside the wrapper */
 }
 
 h2 {
-    color: #333;
+    color: #4CAF50; /* Green color for the title */
     margin-bottom: 1rem;
-    text-align: center;
 }
 
 input[type="text"] {
     width: calc(100% - 80px);
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: 2px solid #007BFF; /* Blue border */
     border-radius: 4px;
     font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #28a745; /* Green border on focus */
+    outline: none; /* Remove default outline */
 }
 
 button {
@@ -38,7 +43,7 @@ button {
     padding: 0.5rem;
     border: none;
     border-radius: 4px;
-    background-color: #28a745;
+    background-color: #007BFF; /* Blue button */
     color: #fff;
     font-size: 1rem;
     cursor: pointer;
@@ -46,17 +51,17 @@ button {
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 #todoList {
     margin-top: 1rem;
     padding: 0;
-    list-style: none;
+    list-style: none; /* Remove bullet points */
 }
 
 #todoList p {
-    background-color: #f8f9fa;
+    background-color: #f8f9fa; /* Light grey background for tasks */
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 0.5rem;
@@ -66,10 +71,31 @@ button:hover {
 }
 
 #todoList p:hover {
-    background-color: #e9ecef;
+    background-color: #d1ecf1; /* Light blue on hover */
 }
 
 #todoList p.line-through {
     text-decoration: line-through;
-    color: #6c757d;
+    color: #6c757d; /* Grey color for completed tasks */
+}
+
+.remove {
+    background-color: #dc3545; /* Red button for removing tasks */
+    color: white;
+    margin-left: 10px; /* Space between text and button */
+}
+
+.remove:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+    input[type="text"] {
+        width: calc(100% - 50px); /* Adjust input width for smaller screens */
+    }
+
+    button {
+        width: 50px; /* Adjust button width */
+    }
 }
