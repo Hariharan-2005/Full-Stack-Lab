@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microblogging App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #6200ea;
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 1.8rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+    }
+    #login-form, #user-dashboard {
+      margin-bottom: 2rem;
+    }
+    #login-form h2, #user-dashboard h2, #feed h2 {
+      margin-bottom: 1rem;
+    }
+    input, textarea, button {
+      margin: 0.5rem 0;
+      padding: 0.7rem;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #6200ea;
+      color: #fff;
+      border: none; 
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #3700b3;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    li {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      background-color: #fafafa;
+    }
+    li p {
+      margin: 0;
+    }
+    .comments-section {
+      margin-top: 1rem;
+      padding-left: 1rem;
+    }
+    .like-dislike {
+      margin-top: 0.5rem;
+    }
+    .like-dislike button {
+      margin-right: 0.5rem;
+      width: auto;
+    }
+    .timestamp {
+      font-size: 0.8rem;
+      color: #888;
+    }
+    .comment {
+      margin-top: 0.5rem;
+    }
+    .comment textarea {
+      width: 100%;
+    }
+    #logout-btn {
+      background-color: #ff5252;
+      margin-top: 1rem;
+    }
+    #logout-btn:hover {
+      background-color: #ff1744;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Microblogging App</h1>
+  </header>
+  <main>
+    <div id="login-form">
+      <h2>Login</h2>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button id="login-btn">Login</button>
+      <p id="login-error" style="color: red; display: none;">Invalid username or password!</p>
+    </div>
+    <div id="user-dashboard" style="display: none;">
+      <h2>Welcome, <span id="user-username"></span>!</h2>
+      <textarea id="post-content" placeholder="Write your post..."></textarea>
+      <button id="post-btn">Post</button>
+      <button id="logout-btn">Logout</button>
+    </div>
+    <div id="feed">
+      <h2>Feed</h2>
+      <ul id="post-list"></ul>
+    </div>
+  </main>
+  
+  <script>
+    const loginForm = document.getElementById('login-form'); 
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const loginButton = document.getElementById('login-btn');
+    const logoutButton = document.getElementById('logout-btn');
+    const loginError = document.getElementById('login-error');
+    const userDashboard = document.getElementById('user-dashboard');
+    const userUsername = document.getElementById('user-username'); 
+    const postContent = document.getElementById('post-content'); 
+    const postButton = document.getElementById('post-btn');
+    const postList = document.getElementById('post-list');
+    let currentUser = null;
+
+    // Hardcoded password
+    const correctPassword = 'pass';
+
+    // Event listener for login button 
+    loginButton.addEventListener('click', () => {
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
+      
+      // Validate the username and password
+      if (username !== '' && password === correctPassword) {
+        currentUser = username; 
+        loginForm.style.display = 'none'; 
+        userDashboard.style.display = 'block'; 
+        userUsername.textContent = username;
+        loginError.style.display = 'none'; // Hide error if successful
+        loadPosts();
+      } else {
+        // Show error if login fails
+        loginError.style.display = 'block';
+      }
+    });
+
+    // Event listener for post button 
+    postButton.addEventListener('click', () => {
+      const content = postContent.value.trim();
+      if (content !== '') {
+        const post = {
+          username: currentUser,
+          content: content,
+          date: new Date().toLocaleDateString(),
+          time: new Date().toLocaleTimeString(),
+          likes: 0,
+          dislikes: 0,
+          comments: []
+        };
+        savePost(post); 
+        postContent.value = '';
+        loadPosts();
+      }
+    });
+
+    // Event listener for logout button
+    logoutButton.addEventListener('click', () => {
+      currentUser = null;
+      loginForm.style.display = 'block';
+      userDashboard.style.display = 'none';
+      usernameInput.value = '';
+      passwordInput.value = '';
+    });
+
+    // Save post to local storage
+    function savePost(post) {
+      let posts = JSON.parse(localStorage.getItem('posts')) || [];
+      posts.push(post);
+      localStorage.setItem('posts', JSON.stringify(posts));
+    }
+
+    // Load posts from local storage
+    function loadPosts() {
+      postList.innerHTML = '';
+      const posts = JSON.parse(localStorage.getItem('posts')) || [];
+      posts.forEach((post, index) => {
+        const postItem = document.createElement('li');
+        postItem.innerHTML = `
+          <p><strong>${post.username}</strong>: ${post.content}</p>
+          <p class="timestamp">${post.date} at ${post.time}</p>
+          <div class="like-dislike">
+            <button class="like-btn">Like (${post.likes})</button>
+            <button class="dislike-btn">Dislike (${post.dislikes})</button>
+          </div>
+          <div class="comments-section">
+            <h4>Comments</h4>
+            <ul class="comment-list">
+              ${post.comments.map(comment => `<li>${comment}</li>`).join('')}
+            </ul>
+            <div class="comment">
+              <textarea class="comment-input" placeholder="Add a comment..."></textarea>
+              <button class="comment-btn">Comment</button>
+            </div>
+          </div>
+        `;
+        postList.appendChild(postItem);
+
+        // Like and dislike buttons
+        const likeBtn = postItem.querySelector('.like-btn');
+        const dislikeBtn = postItem.querySelector('.dislike-btn');
+        likeBtn.addEventListener('click', () => {
+          posts[index].likes++;
+          localStorage.setItem('posts', JSON.stringify(posts));
+          loadPosts();
+        });
+        dislikeBtn.addEventListener('click', () => {
+          posts[index].dislikes++;
+          localStorage.setItem('posts', JSON.stringify(posts));
+          loadPosts();
+        });
+
+        // Add comment
+        const commentBtn = postItem.querySelector('.comment-btn');
+        const commentInput = postItem.querySelector('.comment-input');
+        commentBtn.addEventListener('click', () => {
+          const comment = commentInput.value.trim();
+          if (comment !== '') {
+            posts[index].comments.push(`${currentUser}: ${comment}`);
+            localStorage.setItem('posts', JSON.stringify(posts));
+            loadPosts();
+          }
+        });
+      });
+    }
+
+    // Initial setup
+    if (localStorage.getItem('posts') === null) {
+      localStorage.setItem('posts', JSON.stringify([]));
+    }
+  </script>
+</body>
+</html>
