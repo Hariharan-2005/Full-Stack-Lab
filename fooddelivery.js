@@ -6,7 +6,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    if (username === 'user' && password === 'password123') {
+    if (username === 'user' && password === 'pass') {
         document.getElementById('login-section').style.display = 'none';
         document.getElementById('menu-section').style.display = 'block';
         document.getElementById('order-summary').style.display = 'block';
