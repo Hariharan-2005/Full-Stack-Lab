@@ -1,3 +1,5 @@
+
+/* General Styles */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -20,6 +22,31 @@ main {
     align-items: center;
 }
 
+.form-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+button {
+    background: #ff6347;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #ff4500;
+}
+
+/* Menu Styles */
 .restaurant {
     margin-bottom: 30px;
     border: 1px solid #ddd;
@@ -54,22 +81,8 @@ main {
     border-radius: 8px;
 }
 
-button {
-    background: #ff6347;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background: #ff4500;
-}
-
-/* Order Summary Styling */
-.order-box, .form-box {
+/* Order Summary Styles */
+.order-box {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -77,15 +90,6 @@ button:hover {
     width: 300px;
     text-align: center;
     margin-bottom: 20px;
-}
-
-#order-summary {
-    margin-top: 20px;
-}
-
-/* Initially hide the checkout form */
-.form-box {
-    display: none;
 }
 
 footer {
@@ -96,5 +100,4 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
-    margin-top: 20px;
 }
