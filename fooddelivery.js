@@ -1,67 +1,115 @@
-// your code goes here
-// Login form submission
-document.getElementById('login-form').addEventListener('submit', function(event) {
+// Sample user credentials
+const validUsername = "user";
+const validPassword = "pass";
+
+// Store previous orders and favorites
+let previousOrders = JSON.parse(localStorage.getItem("previousOrders")) || [];
+let favorites = [];
+
+// Login functionality
+document.getElementById("login-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-    if (username === 'user' && password === 'pass') {
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('menu-section').style.display = 'block';
-        document.getElementById('order-summary').style.display = 'block';
-        document.getElementById('page-title').textContent = `Welcome back, ${username}!`;
+    if (username === validUsername && password === validPassword) {
+        alert("Login successful!");
+        document.getElementById("login-section").style.display = "none";
+        document.getElementById("menu-section").style.display = "block";
+        document.getElementById("previous-orders-btn").style.display = "block"; // Show previous orders button
+        document.getElementById("coupon-section").style.display = "block"; // Show coupon section
     } else {
-        alert('Incorrect login credentials.');
+        alert("Invalid credentials, please try again.");
     }
 });
 
-let order = [];
-let total = 0;
+// Order list and total price
+let orderList = [];
+let totalPrice = 0;
 
-// Function to add items to the order
-function addToOrder(item, price) {
-    order.push({ item, price });
-    total += price;
-    updateOrderSummary();
+// Function to add item to order
+function addToOrder(name, price, location) {
+    orderList.push({ name, price, location });
+    totalPrice += price;
+
+    displayOrderSummary();
 }
 
-// Function to update order summary
-function updateOrderSummary() {
-    const orderList = document.getElementById('order-list');
-    orderList.innerHTML = '';
-    order.forEach(orderItem => {
-        const li = document.createElement('li');
-        li.textContent = `${orderItem.item} - $${orderItem.price}`;
-        orderList.appendChild(li);
+// Function to add item to favorites
+function addToFavorites(item) {
+    if (!favorites.includes(item)) {
+        favorites.push(item);
+        alert(`${item} added to favorites!`);
+    } else {
+        alert(`${item} is already in your favorites.`);
+    }
+}
+
+// Function to apply coupon
+function applyCoupon() {
+    if (totalPrice > 200) {
+        totalPrice *= 0.9; // Apply 10% discount
+        document.getElementById("coupon-message").innerText = "Coupon applied! 10% discount applied.";
+        displayOrderSummary();
+    } else {
+        document.getElementById("coupon-message").innerText = "Order total must be above ₹200 to apply coupon.";
+    }
+}
+
+// Function to display order summary
+function displayOrderSummary() {
+    document.getElementById("order-list").innerHTML = orderList.map(item => `<li>${item.name} from ${item.location} - ₹${item.price}</li>`).join("");
+    document.getElementById("total-price").innerText = `Total: ₹${totalPrice.toFixed(2)}`; // Format total to 2 decimal places
+    document.getElementById("order-summary").style.display = "block";
+}
+
+// Checkout functionality
+document.getElementById("order-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const paymentMethod = document.getElementById("payment").value;
+
+    // Get current date and time
+    const now = new Date();
+    const date = now.toLocaleDateString();
+    const day = now.toLocaleString('en-US', { weekday: 'long' });
+    const time = now.toLocaleTimeString();
+
+    // Store previous order without name
+    previousOrders.push({ 
+        items: orderList.map(item => item.name), 
+        location: orderList.map(item => item.location), 
+        total: totalPrice, 
+        date: date,
+        day: day,
+        time: time
     });
-    document.getElementById('total-price').textContent = `Total: $${total}`;
+    localStorage.setItem("previousOrders", JSON.stringify(previousOrders));
+
+    alert("Order placed successfully!");
+
+    // Reset order summary
+    orderList = [];
+    totalPrice = 0;
+    document.getElementById("order-list").innerHTML = "";
+    document.getElementById("total-price").innerText = "Total: ₹0";
+
+    document.getElementById("checkout-section").style.display = "none";
+    document.getElementById("menu-section").style.display = "block";
+});
+
+// Show checkout section
+function showCheckout() {
+    document.getElementById("order-summary").style.display = "none";
+    document.getElementById("checkout-section").style.display = "block";
 }
 
-// Checkout button event listener
-document.getElementById('checkout-btn').addEventListener('click', () => {
-    if (order.length > 0) {
-        document.getElementById('menu-section').style.display = 'none';
-        document.getElementById('checkout-section').style.display = 'block';
-    } else {
-        alert('Please add items to your order first.');
-    }
-});
-
-// Form submission for checkout
-document.getElementById('order-form').addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const name = document.getElementById('name').value;
-    const address = document.getElementById('address').value;
-    const payment = document.getElementById('payment').value;
-
-    alert(`Thank you for your order, ${name}!\nAddress: ${address}\nPayment Type: ${payment}\nTotal: $${total}`);
-
-    // Reset order and form
-    order = [];
-    total = 0;
-    updateOrderSummary();
-    document.getElementById('checkout-section').style.display = 'none';
-    document.getElementById('menu-section').style.display = 'block';
-});
+// Show previous orders
+function showPreviousOrders() {
+    const previousOrderList = document.getElementById("previous-order-list");
+    previousOrderList.innerHTML = previousOrders.map(order => `<li>${order.items.join(', ')} from ${order.location.join(', ')} - ₹${order.total} on ${order.day}, ${order.date} at ${order.time}</li>`).join("");
+    document.getElementById("previous-orders").style.display = "block";
+}
